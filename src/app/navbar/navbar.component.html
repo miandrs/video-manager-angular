@@ -1,0 +1,37 @@
+<mat-toolbar fxLayout="row" color="primary">
+    <a fxFlex routerLink="">Media-Manager</a>
+    <div *ngFor="let item of menuItems" routeLinkActive="active" >
+        <a *ngIf="item.label !== 'Pages'" [routerLink]="item.url" mat-button fxHide.xs>
+            <mat-icon class="mr">{{ item.icon }}</mat-icon>
+            {{ item.label }}
+        </a>
+
+        <a *ngIf="item.label === 'Pages'" mat-button [matMenuTriggerFor]="dropToogle" fxHide.xs>
+            <mat-icon class="mr">{{ item.icon }}</mat-icon>{{ item.label }}
+        </a>
+    </div>
+    <mat-menu #dropToogle="matMenu">
+        <ng-container routeLinkActive="active" >
+            <button type="button" *ngIf="authenticated" (click)="onLogout()" mat-menu-item>
+                <mat-icon class="mr">logout</mat-icon>
+                Logout
+            </button>
+            <a *ngIf="!authenticated" routerLink="login" mat-menu-item>
+                <mat-icon class="mr">login</mat-icon>
+                Sign In
+            </a>
+        </ng-container>
+    </mat-menu>
+    <button mat-icon-button [matMenuTriggerFor]="dropMenu" fxHide fxShow.xs>
+        <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #dropMenu="matMenu">
+        <ng-container *ngFor="let item of xsMenu; let i = index" routeLinkActive="active">
+            <a *ngIf="item.label !== 'Pages'" [routerLink]="item.url" mat-menu-item>
+                <mat-icon class="mr">{{ item.icon }}</mat-icon>
+                {{ item.label }}
+            </a>
+            <mat-divider *ngIf="item.label !== 'Pages' && i !== xsMenu.length-1"></mat-divider>
+        </ng-container>
+    </mat-menu>
+</mat-toolbar>

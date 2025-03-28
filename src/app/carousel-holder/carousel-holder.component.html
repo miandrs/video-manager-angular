@@ -1,0 +1,40 @@
+<owl-carousel-o *ngIf="isHomePage" [options]="customOptions" (translated)="getData($event)" #owlCar>
+    <ng-container *ngFor="let slide of slideStore; let i = index">
+        <ng-template carouselSlide [id]="slide._id">
+            <div class="slide">
+                <img [src]="staticImg"  class="img-fluid w-100 h-100 rounded" [alt]="slide.name" [title]="slide.name">
+                <a href="#" class="btn px-4 py-2 text-white rounded">{{ slide.name }}</a>
+            </div>
+        </ng-template>
+    </ng-container>
+</owl-carousel-o>
+<owl-carousel-o *ngIf="!isHomePage" [options]="customOptions" (translated)="getData($event)" #owlCar>
+    <ng-container *ngFor="let product of slideStore">
+        <ng-template carouselSlide [id]="product._id">
+            <div class="slide border border-primary rounded position-relative product-item">
+                <div class="product-img">
+                    <video controls class="img-fluid w-100 rounded-top" [poster]="product.imageUrl">
+                        <source [src]="product.videoUrl">
+                    </video>
+                </div>
+                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">{{ product.category.name }}</div>
+                <div class="p-4 pb-0 rounded-bottom">
+                    <h4>{{ product.title }}</h4>
+                    <div class="d-flex justify-content-between flex-lg-wrap">
+                        <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+</owl-carousel-o>
+<!--div>
+    <button class="carousel-control-prev" category="button">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" category="button">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div-->

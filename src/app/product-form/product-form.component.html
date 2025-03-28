@@ -1,0 +1,50 @@
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5" [style.background-image]="getBackgroundPath('img/model-index.png')">
+    <h1 class="text-center text-white display-6">Product</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a routerLink="">Home</a></li>
+        <li class="breadcrumb-item active text-white">Product</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+
+
+<!-- Contact Start -->
+<div class="container-fluid contact py-5">
+    <div class="container py-5">
+        <div class="p-5 bg-light rounded miandrs-bg">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <button type="button" class="btn btn-primary" (click)="newProduct()">New Product ?</button>
+                    <form [formGroup]="productForm" (ngSubmit)="onSaveOrUpdateProduct()" enctype="multipart/form-data">
+                        <input type="text" id="name" class="w-100 form-control border-0 py-3 mb-4" placeholder="Video title" formControlName="name">
+                        <input type="text" id="description" class="w-100 form-control border-0 py-3 mb-4" placeholder="Video description" formControlName="description">
+                        <select id="category" class="w-100 form-control border-0 py-3 mb-4"  formControlName="category">
+                            <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}</option>
+                        </select>
+                        <input type="file" class="w-100 form-control border-0 py-3 mb-4" id="poster" (change)="uploadFile($event, 'poster')" formControlName="poster">
+                        <input type="file" class="w-100 form-control border-0 py-3 mb-4" id="video" (change)="uploadFile($event, 'video')" formControlName="video">
+                        <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="submit" [disabled]="productForm.invalid">{{ isCreate ? 'Save' : 'Modify' }}</button>
+                    </form>
+                    <div *ngIf="response" class="text-success mb-4">
+                        {{ response.message }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="text-center">All My Products</h3>
+                    <ul class="list-group">
+                        <li *ngFor="let item of products; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            {{ item.description }}
+                        </div>
+                        <div>
+                            <button (click)="onDelProduct(item._id)" class="btn btn-danger">Delete</button>
+                            <button (click)="onEditForm(item, i)" class="btn btn-primary" style="margin-left: 5px;">Edit</button>
+                        </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
